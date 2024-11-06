@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.cisco</groupId>
+	<artifactId>snmptraprx</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+	<repositories>
+  <repository>
+    <id>central</id>
+    <name>Maven Central</name>
+    <layout>default</layout>
+    <url>https://repo1.maven.org/maven2</url>
+    <snapshots>
+    <enabled>true</enabled>
+    </snapshots>
+  </repository>
+          <repository>
+            <id>maven-repo-mibble</id>
+            <url>https://raw.github.com/bnese/maven-repo-mibble/master/</url>
+        </repository>
+</repositories>
+	<dependencies>
+	 <dependency>
+            <groupId>org.snmp4j</groupId>
+            <artifactId>snmp4j</artifactId>
+            <version>2.8.6</version>
+        </dependency>
+
+		<dependency>
+		    <groupId>net.cederberg.mibble</groupId>
+		    <artifactId>mibble-mibs</artifactId>
+		    <version>2.10.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>net.cederberg.mibble</groupId>
+		    <artifactId>mibble-parser</artifactId>
+		    <version>2.10.1</version>
+		</dependency>
+		<!-- JSON Library Dependency -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20210307</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<!-- Maven Compiler Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>
+			<!-- Maven Shade Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>com.cisco.SnmpTrapReceiver</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
